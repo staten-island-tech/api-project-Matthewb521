@@ -1,20 +1,29 @@
-import "./style.css";
-async function getData() {
-  try {
-    const response = await fetch(
-      "https://coinlib.io/api/v1/global?key=XXX&pref=EUR"
-    );
-    if (response.status != 200) {
-      throw new Error(response);
-    } else {
-      const data = await response.json();
-      document.querySelector(
-        "h1"
-      ).textContent = `Global Market Cap: €${marketCap}, BTC Dominance: ${btcDominance}%`;
-    }
-  } catch (error) {
-    console.log(error);
-    alert("sorry could not find");
-  }
+const URL =
+  "https://collectionapi.metmuseum.org/public/collection/v1/objects/437233";
+
+async function getData(URL) {
+  const response = await fetch(URL);
+  const data = await response.json();
+  displayCard(data);
 }
-getData();
+
+function createCard(data) {
+  return `
+    <div class="card card-ani">
+      <h2>${data.title || "Untitled"}</h2>
+      <img class="images" src="${
+        data.primaryImage || "placeholder.jpg"
+      }" alt="${data.objectName || "Unknown"}" />
+      <h3>Type: ${data.objectName || "Unknown"}</h3>
+      <p>Period: ${data.period || "Unknown"}</p>
+      <p>Artist: ${data.artistDisplayName || "Unknown"}</p>
+    </div>
+  `;
+}
+
+function displayCard(data) {
+  const container = document.getElementById("container");
+  container.innerHTML = createCard(data);
+}
+
+getData(URL);
