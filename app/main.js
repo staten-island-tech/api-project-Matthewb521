@@ -1,5 +1,5 @@
 const URL =
-  "https://collectionapi.metmuseum.org/public/collection/v1/objects/437233";
+  "https://collectionapi.metmuseum.org/public/collection/v1/objects/436233";
 
 async function getData(URL) {
   const response = await fetch(URL);
@@ -9,7 +9,7 @@ async function getData(URL) {
 
 function createCard(data) {
   return `
-    <div class="card card-ani">
+    <div class="">
       <h2>${data.title || "Untitled"}</h2>
       <img class="images" src="${
         data.primaryImage || "placeholder.jpg"
@@ -17,6 +17,7 @@ function createCard(data) {
       <h3>Type: ${data.objectName || "Unknown"}</h3>
       <p>Period: ${data.period || "Unknown"}</p>
       <p>Artist: ${data.artistDisplayName || "Unknown"}</p>
+      <button class= "btn-sm">Learn More</button>
     </div>
   `;
 }
