@@ -1,3 +1,4 @@
+import "style.css";
 const URL =
   "https://collectionapi.metmuseum.org/public/collection/v1/objects/436233";
 
