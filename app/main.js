@@ -1,10 +1,18 @@
-const URL =
-  "https://collectionapi.metmuseum.org/public/collection/v1/objects/437233";
+const BASE_URL = "https://collectionapi.metmuseum.org/public/collection/v1/";
 
-async function getData(URL) {
-  const response = await fetch(URL);
+async function getData() {
+  const response = await fetch(`${BASE_URL}objects`);
   const data = await response.json();
-  displayCard(data);
+  const objectIDs = data.objectIDs.slice(1000, 1001);
+
+  const objectData = await Promise.all(
+    objectIDs.map(async (id) => {
+      const objectResponse = await fetch(`${BASE_URL}objects/${id}`);
+      return await objectResponse.json();
+    })
+  );
+
+  displayCards(objectData);
 }
 
 function createCard(data) {
@@ -21,9 +29,21 @@ function createCard(data) {
   `;
 }
 
-function displayCard(data) {
+function displayCards(dataArray) {
   const container = document.getElementById("container");
-  container.innerHTML = createCard(data);
+  container.innerHTML = "";
+  dataArray.forEach((data) => {
+    container.innerHTML += createCard(data);
+  });
+
+  document.querySelectorAll(".btn").forEach((button) => {
+    button.addEventListener("click", function () {
+      const card = button.closest(".card");
+      card.classList.toggle("w-[90%]");
+      card.classList.toggle("h-[80%]");
+      card.classList.toggle("scale-110");
+    });
+  });
 }
 
-getData(URL);
+getData();
