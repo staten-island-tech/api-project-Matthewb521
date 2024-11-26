@@ -1,9 +1,13 @@
 const BASE_URL = "https://collectionapi.metmuseum.org/public/collection/v1/";
 
+const DOMselectors = {
+  container: document.querySelector(".container"),
+};
+
 async function getData() {
   const response = await fetch(`${BASE_URL}objects`);
   const data = await response.json();
-  const objectIDs = data.objectIDs.slice(1000, 1001);
+  const objectIDs = data.objectIDs.slice(1000, 1010);
 
   const objectData = await Promise.all(
     objectIDs.map(async (id) => {
@@ -12,7 +16,7 @@ async function getData() {
     })
   );
 
-  displayCards(objectData);
+  createCard(objectData);
 }
 
 function createCard(data) {
@@ -29,21 +33,11 @@ function createCard(data) {
   `;
 }
 
-function displayCards(dataArray) {
-  const container = document.getElementById("container");
-  container.innerHTML = "";
-  dataArray.forEach((data) => {
-    container.innerHTML += createCard(data);
-  });
-
-  document.querySelectorAll(".btn").forEach((button) => {
-    button.addEventListener("click", function () {
-      const card = button.closest(".card");
-      card.classList.toggle("w-[90%]");
-      card.classList.toggle("h-[80%]");
-      card.classList.toggle("scale-110");
-    });
-  });
-}
+// function displayCards(artistFilter) {
+//   displayedCards = dataArray.filter(
+//     (data) => !artistFilter || data.artistDisplayName === artistFilter
+//   );
+//   Container.innerHTML = displayedCards.map(displayCards).join("");
+// }
 
 getData();
