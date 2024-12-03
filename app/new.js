@@ -1,11 +1,11 @@
 const BASE_URL = "https://statsapi.mlb.com/api/v1/teams";
-const ROSTER_URL = "https://statsapi.mlb.com/api/v1/teams/{teamId}/roster";
 
 const DOMselectors = {
   container: document.querySelector(".container"),
 };
 
 async function getTeamRoster(teamId) {
+  const ROSTER_URL = "https://statsapi.mlb.com/api/v1/teams/{teamId}/roster";
   const URL = ROSTER_URL.replace("{teamId}", teamId);
   try {
     const response = await fetch(URL);
