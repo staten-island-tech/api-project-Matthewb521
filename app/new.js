@@ -17,10 +17,8 @@ async function getTeamRoster(teamId) {
 
     DOMselectors.container.innerHTML = "";
 
-    console.log(`Players for team ID ${teamId}:`);
     players.forEach((player) => {
       console.log(player.person.fullName);
-
       const cardHTML = createCard(player);
       DOMselectors.container.innerHTML += cardHTML;
     });
