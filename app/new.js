@@ -5,10 +5,9 @@ const DOMselectors = {
 };
 
 async function getTeamRoster(teamId) {
-  const ROSTER_URL = "https://statsapi.mlb.com/api/v1/teams/{teamId}/roster";
-  const URL = ROSTER_URL.replace("{teamId}", teamId);
+  const ROSTER_URL = `https://statsapi.mlb.com/api/v1/teams/${teamId}/roster`;
   try {
-    const response = await fetch(URL);
+    const response = await fetch(ROSTER_URL);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -26,6 +25,30 @@ async function getTeamRoster(teamId) {
     console.log("Full roster data:", players);
   } catch (error) {
     console.log("Error fetching team roster:", error);
+  }
+}
+
+async function getPlayer(name) {
+  const BASE_URL = "https://statsapi.mlb.com/api/v1/people/search";
+  const namePart = encodeURIComponent(name);
+  const url = `${BASE_URL}?query=${namePart}`;
+
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    // Find exact match (case-insensitive)
+    const player = data.people.find(
+      (p) => p.fullName.toLowerCase() === name.toLowerCase()
+    );
+
+    if (player) {
+      console.log(player); // Exact match for the player
+    } else {
+      console.log("Player not found or too many matches");
+    }
+  } catch (error) {
+    console.error("Error fetching player data:", error);
   }
 }
 
@@ -48,3 +71,5 @@ document.getElementById("team-select").addEventListener("change", function () {
   console.clear();
   console.log(`Team selected: ${selectedTeamId}`);
 });
+
+getPlayer("Trea Turner");
