@@ -72,4 +72,4 @@ document.getElementById("team-select").addEventListener("change", function () {
   console.log(`Team selected: ${selectedTeamId}`);
 });
 
-getPlayer("Trea Turner");
+getPlayer("Nick Castellanos");
