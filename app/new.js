@@ -32,21 +32,27 @@ async function getPlayer(name) {
   const BASE_URL = "https://statsapi.mlb.com/api/v1/people/search";
   const namePart = encodeURIComponent(name);
   const url = `${BASE_URL}?query=${namePart}`;
-
   try {
     const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
     const data = await response.json();
-
-    // Find exact match (case-insensitive)
-    const player = data.people.find(
+    const players = data.people.filter(
       (p) => p.fullName.toLowerCase() === name.toLowerCase()
     );
-
-    if (player) {
-      console.log(player); // Exact match for the player
+    DOMselectors.container.innerHTML = "";
+    if (players.length > 0) {
+      players.forEach((player) => {
+        console.log(player);
+        const cardHTML = createCard2(player);
+        DOMselectors.container.innerHTML += cardHTML;
+      });
     } else {
-      console.log("Player not found or too many matches");
+      console.log("Player not found");
+      DOMselectors.container.innerHTML = `<p>Player not found.</p>`;
     }
+    console.log("Player search results:", players);
   } catch (error) {
     console.error("Error fetching player data:", error);
   }
@@ -65,6 +71,17 @@ function createCard(player) {
     `;
 }
 
+function createCard2(player) {
+  return `
+      <div class="card card-compact bg-base-100 w-96 shadow-xl flex items-center justify-center text-center h-full">
+        <h2 class="text-2xl">${player.firstLastName || "Unknown Player"}</h2>
+        <h3 class="text-lg">Debut Date: ${player.mlbDebutDate || "N/A"}</h3>
+        <p class="text-sm">Gender: ${player.gender || "N/A"}</p>
+        <button class="btn text-base">Learn More</button>
+      </div>
+    `;
+}
+
 document.getElementById("team-select").addEventListener("change", function () {
   const selectedTeamId = this.value;
   getTeamRoster(selectedTeamId);
@@ -72,4 +89,14 @@ document.getElementById("team-select").addEventListener("change", function () {
   console.log(`Team selected: ${selectedTeamId}`);
 });
 
-getPlayer("Nick Castellanos");
+document
+  .getElementById("player-search-form")
+  .addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const name = document.getElementById("name-search").value.trim();
+    if (name) {
+      await getPlayer(name);
+    } else {
+      console.log("Please enter a name");
+    }
+  });

@@ -53,11 +53,22 @@
           <option value="147">New York Yankees</option>
           <option value="158">Milwaukee Brewers</option>
         </select>
+    <div>
+      <form id="player-search-form">
+        <label for="name-search">Name Search:</label>
+        <input
+          type="text"
+          id="name-search"
+          name="submitted-name"
+          autocomplete="name"
+        /><br /><br />
+        <button type="submit">Search</button>
+      </form>
+    </div>
     <div
       id="container"
       class="container flex justify-center items-center flex-wrap gap-20 grid-row"
     ></div>
-
     <script type="module" src="new.js"></script>
   </body>
 </html>
