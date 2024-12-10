@@ -76,7 +76,7 @@ function createCard2(player) {
       <div class="card card-compact bg-base-100 w-96 shadow-xl flex items-center justify-center text-center h-full">
         <h2 class="text-2xl">${player.firstLastName || "Unknown Player"}</h2>
         <h3 class="text-lg">Debut Date: ${player.mlbDebutDate || "N/A"}</h3>
-        <p class="text-sm">Gender: ${player.gender || "N/A"}</p>
+        <p class="text-sm">Gender: ${player.gender || "N/A"} </p>
         <button class="btn text-base">Learn More</button>
       </div>
     `;
