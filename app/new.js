@@ -60,13 +60,11 @@ async function getPlayer(name) {
 
 function createCard(player) {
   return `
-      <div class="card card-compact bg-base-100 w-96 shadow-xl flex items-center justify-center text-center h-full">
-        <h2 class="text-2xl">${player.person.fullName || "Unknown Player"}</h2>
-        <img class="images" src=${player.person.picture} 
-          alt="${player.person.fullName || "Unknown"}" />
+      <div class="card bg-base-100 w-96 shadow-xl place-content-center text-center">
+        <h2 class="text-2xl ">${player.person.fullName || "Unknown Player"}</h2>
         <h3 class="text-lg">Jersey Number: ${player.jerseyNumber || "N/A"}</h3>
         <p class="text-sm">Position: ${player.position.name || "N/A"}</p>
-        <button class="btn text-base">Learn More</button>
+        <button class=""btn text-base">Learn More</button>
       </div>
     `;
 }
