@@ -64,7 +64,7 @@ function createCard(player) {
         <h2 class="text-2xl ">${player.person.fullName || "Unknown Player"}</h2>
         <h3 class="text-lg">Jersey Number: ${player.jerseyNumber || "N/A"}</h3>
         <p class="text-sm">Position: ${player.position.name || "N/A"}</p>
-        <button class=""btn text-base">Learn More</button>
+        <button class="btn text-base">Learn More</button>
       </div>
     `;
 }
